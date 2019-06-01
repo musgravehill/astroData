@@ -1,0 +1,3 @@
+COMMON methos
+Sphere D76 ROC 600 mm
+Diagonal mirror wrom SW2001, small axis 52mm
