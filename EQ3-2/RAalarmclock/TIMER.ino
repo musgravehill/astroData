@@ -15,10 +15,12 @@ void TIMER_OCR1A_init() {
 void TIMER_OCR1A_inc() {
   TIMER_OCR1A++;
   EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A);
+  TIMER_STAR_config();
 }
 void TIMER_OCR1A_dec() {
   TIMER_OCR1A--;
   EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A);
+  TIMER_STAR_config();
 }
 
 
