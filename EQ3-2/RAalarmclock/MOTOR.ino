@@ -33,11 +33,11 @@ void MOTOR_init() {
   pinMode(DRIVER_RA_DIR,  OUTPUT);
   digitalWrite(DRIVER_RA_DIR, LOW);
 
-  pinMode(DRIVER_DEC_STEP,  OUTPUT);
-  digitalWrite(DRIVER_DEC_STEP, LOW);
+ // pinMode(DRIVER_DEC_STEP,  OUTPUT);
+ // digitalWrite(DRIVER_DEC_STEP, LOW);
 
-  pinMode(DRIVER_DEC_DIR,  OUTPUT);
-  digitalWrite(DRIVER_DEC_DIR, LOW);
+ // pinMode(DRIVER_DEC_DIR,  OUTPUT);
+ // digitalWrite(DRIVER_DEC_DIR, LOW);
 
   MOTOR_set_RA_dir(true); //run star-speed  ПРОТИВ ЧАСОВОЙ СТРЕЛКИ
   TIMER_STAR_config(); //run star-speed

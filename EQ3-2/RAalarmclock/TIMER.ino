@@ -9,6 +9,20 @@
   Using Timer 5 disables PWM (analogWrite) on pins 44, 45 and 46
 */
 
+void TIMER_OCR1A_init() {
+  TIMER_OCR1A = EEPROM16_Read(TIMER_OCR1A_store_address);
+}
+void TIMER_OCR1A_inc() {
+  TIMER_OCR1A++;
+  EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A);
+}
+void TIMER_OCR1A_dec() {
+  TIMER_OCR1A--;
+  EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A);
+}
+
+
+
 void TIMER_STAR_config() {
   /////  starSpeed_us_for_microtick = STARDAY_us\RA_microticks_per_revolution   =  18698.8043687066 us = 53.479355165272 Hz
   //OCR1A =  [ 16,000,000Hz/ (prescaler * desired interrupt frequency) ] - 1
@@ -22,7 +36,7 @@ void TIMER_STAR_config() {
   TCCR1B = 0;// same for TCCR1B
   TCNT1  = 0;//initialize counter value to 0
 
-  OCR1A = 1168;    //Верхняя граница счета. Диапазон от 0 до 65535.
+  OCR1A =  TIMER_OCR1A;    //Верхняя граница счета. Диапазон от 0 до 65535.
 
   TCCR1B |= (1 << WGM12);  // Режим CTC (сброс по совпадению)
 
@@ -39,35 +53,6 @@ void TIMER_STAR_config() {
   sei (); // Разрешить прерывания
 }
 
-void TIMER_GOTO_config() {
-  /////  gotoSpeed_us_for_microtick    Hz
-  //OCR1A =  [ 16,000,000Hz/ (prescaler * desired interrupt frequency) ] - 1
-  //OCR1A = 16000000/(1*14000)  -1 = 1141.857142857143
-  //f = 16000000(1*(1142+1)) = 13998.25021872266 Hz by Timer1
-
-  cli(); //запретить все прерывания
-
-  //------ Timer1 ----------
-  TCCR1A = 0;// set entire TCCR1A register to 0
-  TCCR1B = 0;// same for TCCR1B
-  TCNT1  = 0;//initialize counter value to 0
-
-  OCR1A = 1142;           // Верхняя граница счета. Диапазон от 0 до 65535
-
-  TCCR1B |= (1 << WGM12); // Режим CTC (сброс по совпадению)
-
-  // Если нужен предделитель :
-  // TCCR1B |= (1 << CS10);         // Тактирование от CLK/1
-  // TCCR1B |= (1<<CS11);           // CLK/8
-  // TCCR1B |= (1<<CS10)|(1<<CS11); // CLK/64
-  // TCCR1B |= (1<<CS12);           // CLK/256
-  // TCCR1B |= (1<<CS10)|(1<<CS12); // CLK/1024
-  TCCR1B |= (1 << CS10);         // Тактирование от CLK/1
-
-  TIMSK1 |= (1 << OCIE1A); // Разрешить прерывание по совпадению
-
-  sei (); // Разрешить прерывания
-}
 
 // Обработчик прерывания таймера 1
 ISR (TIMER1_COMPA_vect) {
