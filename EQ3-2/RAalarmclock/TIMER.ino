@@ -33,6 +33,8 @@ void TIMER_config(uint8_t speed_divider, bool dir_ra, bool dir_dec) {
 
   cli(); //запретить все прерывания!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+  TIMER_tick_counter = 0;
+
   delay(50);
   MOTOR_set_RA_dir(dir_ra);
   MOTOR_set_DEC_dir(dir_dec);
@@ -63,6 +65,7 @@ void TIMER_config(uint8_t speed_divider, bool dir_ra, bool dir_dec) {
 
 // Обработчик прерывания таймера 1
 ISR (TIMER1_COMPA_vect) {
+  TIMER_tick_counter++;
   switch (SYS_STATE) {
     case SYS_STATE_PULT_RA_FORWARD:
       MOTOR_RA_TICK();
@@ -79,6 +82,12 @@ ISR (TIMER1_COMPA_vect) {
     case SYS_STATE_STAR_TRACKING:
       MOTOR_RA_TICK();
       break;
+  }
+  if (TIMER_tick_counter > PULT_SPEED_COEFF) {
+    TIMER_tick_counter = 0;
+    if (SYS_STATE != SYS_STATE_STAR_TRACKING) {
+      MOTOR_RA_TICK(); //star speed when puls some btn pressed
+    }
   }
 }
 

@@ -29,9 +29,10 @@
 #define SYS_STATE_PULT_RA_BACKWARD 2
 #define SYS_STATE_PULT_DEC_FORWARD 3
 #define SYS_STATE_PULT_DEC_BACKWARD 4
-uint8_t SYS_STATE = SYS_STATE_STAR_TRACKING;
-uint8_t SYS_STATE_PREV = SYS_STATE_STAR_TRACKING;
+volatile uint8_t SYS_STATE = SYS_STATE_STAR_TRACKING;
+volatile uint8_t SYS_STATE_PREV = SYS_STATE_STAR_TRACKING;
 #define PULT_SPEED_COEFF 10
+volatile uint8_t TIMER_tick_counter = 0; 
 
 //========================================SKY MATH=========================================
 
@@ -47,7 +48,7 @@ uint8_t SYS_STATE_PREV = SYS_STATE_STAR_TRACKING;
 uint16_t TIMER_OCR1A = 1168; //Верхняя граница счета. Диапазон от 0 до 65535.
 uint8_t TIMER_OCR1A_store_address = 0; //save value to eeprom
 
-uint32_t TIMEMACHINE_prevMicros_173ms = 1L;
+uint32_t TIMEMACHINE_prevMicros_83ms = 1L;
 uint32_t TIMEMACHINE_prevMicros_873ms = 1L;
 
 void setup() {
