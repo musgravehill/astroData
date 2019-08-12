@@ -6,7 +6,7 @@ void MOTOR_RA_TICK() {
 
 void MOTOR_DEC_TICK() {
   PORTB |= _BV(PB3); //high
-  delayMicroseconds(4); //8us by OWON. DRV8825 needs 1.9 us
+  delayMicroseconds(4); //DRV8825 needs 1.9 us
   PORTB &= ~_BV(PB3); //low
 }
 
@@ -33,13 +33,13 @@ void MOTOR_init() {
   pinMode(DRIVER_RA_DIR,  OUTPUT);
   digitalWrite(DRIVER_RA_DIR, LOW);
 
- // pinMode(DRIVER_DEC_STEP,  OUTPUT);
- // digitalWrite(DRIVER_DEC_STEP, LOW);
+  pinMode(DRIVER_DEC_STEP,  OUTPUT);
+  digitalWrite(DRIVER_DEC_STEP, LOW);
 
- // pinMode(DRIVER_DEC_DIR,  OUTPUT);
- // digitalWrite(DRIVER_DEC_DIR, LOW);
+  pinMode(DRIVER_DEC_DIR,  OUTPUT);
+  digitalWrite(DRIVER_DEC_DIR, LOW);
 
-  MOTOR_set_RA_dir(true); //run star-speed  ПРОТИВ ЧАСОВОЙ СТРЕЛКИ
-  TIMER_STAR_config(); //run star-speed
+
+  TIMER_config(1, true, true); //run star-speed
 }
 

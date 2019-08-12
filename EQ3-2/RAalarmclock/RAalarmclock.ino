@@ -11,21 +11,27 @@
 
 #define RA_speed_inc 5 //PD5 BTN
 #define RA_speed_dec 4 //PD4 BTN
-
-//#define DRIVER_DEC_DIR 10 //PB2
-//#define DRIVER_DEC_STEP 11 //PB3
+#define DRIVER_DEC_DIR 10 //PB2
+#define DRIVER_DEC_STEP 11 //PB3
 
 
 //#define BUTTON_GOTO_SYNC_LED 3 //PD3
-
-
 //#define BUTTON_DEC_INVERT_DIR_LED 2 //PD2
 
 //PULT
-//#define BUTTON_RA_FORWARD 7 //PD7
-//#define BUTTON_RA_BACKWARD 6 //PD6
-//#define BUTTON_DEC_FORWARD 9 //PB1
-//#define BUTTON_DEC_BACKWARD 8 //PB0
+#define BUTTON_RA_FORWARD 7 //PD7
+#define BUTTON_RA_BACKWARD 6 //PD6
+#define BUTTON_DEC_FORWARD 9 //PB1
+#define BUTTON_DEC_BACKWARD 8 //PB0
+
+#define SYS_STATE_STAR_TRACKING 0
+#define SYS_STATE_PULT_RA_FORWARD 1
+#define SYS_STATE_PULT_RA_BACKWARD 2
+#define SYS_STATE_PULT_DEC_FORWARD 3
+#define SYS_STATE_PULT_DEC_BACKWARD 4
+uint8_t SYS_STATE = SYS_STATE_STAR_TRACKING;
+uint8_t SYS_STATE_PREV = SYS_STATE_STAR_TRACKING;
+#define PULT_SPEED_COEFF 10
 
 //========================================SKY MATH=========================================
 
@@ -49,7 +55,7 @@ void setup() {
   //EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A); //TMP
   TIMER_OCR1A_init();
   BUTTON_init();
-  MOTOR_init();  
+  MOTOR_init();
 }
 
 void loop() {

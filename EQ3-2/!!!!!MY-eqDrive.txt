@@ -1,5 +1,5 @@
 Ўаговик:
-0.9 градуса\шаг Orient Japan
+0.9 градуса\шаг VEXTA Oriental Japan
 6.35мм вал
 7 ќм фаза
 

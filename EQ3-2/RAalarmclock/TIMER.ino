@@ -15,30 +15,35 @@ void TIMER_OCR1A_init() {
 void TIMER_OCR1A_inc() {
   TIMER_OCR1A++;
   EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A);
-  TIMER_STAR_config();
+  TIMER_config(1, true, true);
 }
 void TIMER_OCR1A_dec() {
   TIMER_OCR1A--;
   EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A);
-  TIMER_STAR_config();
+  TIMER_config(1, true, true);
 }
 
 
 
-void TIMER_STAR_config() {
+void TIMER_config(uint8_t speed_divider, bool dir_ra, bool dir_dec) {
   /////  starSpeed_us_for_microtick = STARDAY_us\RA_microticks_per_revolution   =  18698.8043687066 us = 53.479355165272 Hz
   //OCR1A =  [ 16,000,000Hz/ (prescaler * desired interrupt frequency) ] - 1
   //OCR1A = 16000000/(256*53.479355165272)    -1 = 1167.675273044163
   //f = 16000000(256*(1168+1)) = 53.464499572284 Hz by Timer1
 
-  cli(); //запретить все прерывания
+  cli(); //запретить все прерывания!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  delay(50);
+  MOTOR_set_RA_dir(dir_ra);
+  MOTOR_set_DEC_dir(dir_dec);
+  delay(50);
 
   //------ Timer1 ----------
   TCCR1A = 0;// set entire TCCR1A register to 0
   TCCR1B = 0;// same for TCCR1B
   TCNT1  = 0;//initialize counter value to 0
 
-  OCR1A =  TIMER_OCR1A;    //Верхняя граница счета. Диапазон от 0 до 65535.
+  OCR1A =  TIMER_OCR1A / speed_divider;    //Верхняя граница счета. Диапазон от 0 до 65535.
 
   TCCR1B |= (1 << WGM12);  // Режим CTC (сброс по совпадению)
 
@@ -58,7 +63,23 @@ void TIMER_STAR_config() {
 
 // Обработчик прерывания таймера 1
 ISR (TIMER1_COMPA_vect) {
-  MOTOR_RA_TICK(); //star speed
+  switch (SYS_STATE) {
+    case SYS_STATE_PULT_RA_FORWARD:
+      MOTOR_RA_TICK();
+      break;
+    case SYS_STATE_PULT_RA_BACKWARD:
+      MOTOR_RA_TICK();
+      break;
+    case SYS_STATE_PULT_DEC_FORWARD:
+      MOTOR_DEC_TICK();
+      break;
+    case SYS_STATE_PULT_DEC_BACKWARD:
+      MOTOR_DEC_TICK();
+      break;
+    case SYS_STATE_STAR_TRACKING:
+      MOTOR_RA_TICK();
+      break;
+  }
 }
 
 

@@ -12,11 +12,9 @@ void TIMEMACHINE_loop() {
 }
 
 void TIMEMACHINE_173ms() {
-
+  BUTTON_check();
 }
 void TIMEMACHINE_873ms() {
-  BUTTON_check();   
-   
   Serial.println(TIMER_OCR1A);
 }
 
