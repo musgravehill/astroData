@@ -14,7 +14,6 @@
 #define DRIVER_DEC_DIR 10 //PB2
 #define DRIVER_DEC_STEP 11 //PB3
 
-
 //#define BUTTON_GOTO_SYNC_LED 3 //PD3
 //#define BUTTON_DEC_INVERT_DIR_LED 2 //PD2
 
@@ -31,7 +30,7 @@
 #define SYS_STATE_PULT_DEC_BACKWARD 4
 volatile uint8_t SYS_STATE = SYS_STATE_STAR_TRACKING;
 volatile uint8_t SYS_STATE_PREV = SYS_STATE_STAR_TRACKING;
-#define PULT_SPEED_COEFF 10
+#define PULT_SPEED_COEFF 500
 volatile uint8_t TIMER_tick_counter = 0; 
 
 //========================================SKY MATH=========================================
