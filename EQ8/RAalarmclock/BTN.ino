@@ -58,11 +58,8 @@ void BUTTON_check() {
         TIMER_config(1, true, true);
         break;
     }
-
-    SYS_STATE_PREV = SYS_STATE;
   }
-
-
+  SYS_STATE_PREV = SYS_STATE;  
 }
 
 void BUTTON_init() {

@@ -31,7 +31,7 @@
 volatile uint8_t SYS_STATE = SYS_STATE_STAR_TRACKING;
 volatile uint8_t SYS_STATE_PREV = SYS_STATE_STAR_TRACKING;
 #define PULT_SPEED_COEFF 500
-volatile uint8_t TIMER_tick_counter = 0; 
+volatile uint16_t TIMER_tick_counter = 0;
 
 //========================================SKY MATH=========================================
 
@@ -56,6 +56,13 @@ void setup() {
   TIMER_OCR1A_init();
   BUTTON_init();
   MOTOR_init();
+
+  /*delay(1000);
+  uint16_t i = 0;  //32*200
+  for (i = 0; i < 6400; i++) {
+    MOTOR_DEC_TICK();
+    delayMicroseconds(100);
+  }*/
 }
 
 void loop() {

@@ -15,7 +15,8 @@ void TIMEMACHINE_83ms() {
   BUTTON_check();
 }
 void TIMEMACHINE_873ms() {
-  Serial.println(TIMER_OCR1A);
+  //Serial.println(TIMER_OCR1A);    
+  //Serial.println(SYS_STATE);
 }
 
 

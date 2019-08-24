@@ -65,7 +65,7 @@ void TIMER_config(uint8_t speed_divider, bool dir_ra, bool dir_dec) {
 
 // Обработчик прерывания таймера 1
 ISR (TIMER1_COMPA_vect) {
-  TIMER_tick_counter++;
+
   switch (SYS_STATE) {
     case SYS_STATE_PULT_RA_FORWARD:
       MOTOR_RA_TICK();
@@ -83,10 +83,13 @@ ISR (TIMER1_COMPA_vect) {
       MOTOR_RA_TICK();
       break;
   }
-  if (TIMER_tick_counter > PULT_SPEED_COEFF) {
-    TIMER_tick_counter = 0;
-    if (SYS_STATE != SYS_STATE_STAR_TRACKING) {
-      MOTOR_RA_TICK(); //star speed when puls some btn pressed
+
+  if (SYS_STATE != SYS_STATE_STAR_TRACKING) {
+    //Serial.println(TIMER_tick_counter);
+    TIMER_tick_counter++;
+    if (TIMER_tick_counter > PULT_SPEED_COEFF) {
+      TIMER_tick_counter = 0;
+      MOTOR_RA_TICK(); //star speed when puls some btn pressed      
     }
   }
 }
