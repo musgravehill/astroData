@@ -59,17 +59,17 @@ void BUTTON_check() {
         break;
     }
   }
-  SYS_STATE_PREV = SYS_STATE;  
+  SYS_STATE_PREV = SYS_STATE;
 }
 
 void BUTTON_init() {
-  pinMode(RA_speed_inc,  INPUT);
-  pinMode(RA_speed_dec,  INPUT);
+  pinMode(RA_speed_inc,  INPUT_PULLUP);
+  pinMode(RA_speed_dec,  INPUT_PULLUP);
 
-  pinMode(BUTTON_RA_FORWARD,  INPUT);
-  pinMode(BUTTON_RA_BACKWARD,  INPUT);
-  pinMode(BUTTON_DEC_FORWARD,  INPUT);
-  pinMode(BUTTON_DEC_BACKWARD,  INPUT);
+  pinMode(BUTTON_RA_FORWARD,  INPUT_PULLUP);
+  pinMode(BUTTON_RA_BACKWARD,  INPUT_PULLUP);
+  pinMode(BUTTON_DEC_FORWARD,  INPUT_PULLUP);
+  pinMode(BUTTON_DEC_BACKWARD,  INPUT_PULLUP);
 }
 
 

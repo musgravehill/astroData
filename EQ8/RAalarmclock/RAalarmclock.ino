@@ -52,10 +52,12 @@ uint32_t TIMEMACHINE_prevMicros_873ms = 1L;
 
 void setup() {
   Serial.begin(9600);
-  //EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A); //TMP
+  EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A); //TMP
   TIMER_OCR1A_init();
   BUTTON_init();
   MOTOR_init();
+
+  Serial.println(TIMER_OCR1A);    
 
   /*delay(1000);
   uint16_t i = 0;  //32*200
