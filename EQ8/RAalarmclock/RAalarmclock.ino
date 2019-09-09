@@ -41,10 +41,10 @@ volatile uint16_t TIMER_tick_counter = 0;
 //#define STARDAY_us = 86164090531L //micro second in star-day
 
 // тиков двигателя на полный оборот монти (зависит от редукции)
-// 130(червь)* XXX (ремень)*400(шагов на 1 оборот ШД)* 32(микрошаг DRIVER_MICROSTEP_X=32)
-//#define RA_microticks_per_revolution  4608000L; //ось прямого восхождения
+// 144(червь)* 40\16 (ремень)* 200(шагов на 1 оборот ШД)* 32(микрошаг DRIVER_MICROSTEP_X=32)
+//#define RA_microticks_per_revolution  2304000L; //ось прямого восхождения
 
-uint16_t TIMER_OCR1A = 1168; //Верхняя граница счета. Диапазон от 0 до 65535.
+uint16_t TIMER_OCR1A = 2336; //Верхняя граница счета. Диапазон от 0 до 65535.
 uint8_t TIMER_OCR1A_store_address = 0; //save value to eeprom
 
 uint32_t TIMEMACHINE_prevMicros_83ms = 1L;

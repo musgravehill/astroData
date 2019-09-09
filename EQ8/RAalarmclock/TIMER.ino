@@ -26,10 +26,10 @@ void TIMER_OCR1A_dec() {
 
 
 void TIMER_config(uint8_t speed_divider, bool dir_ra, bool dir_dec) {
-  /////  starSpeed_us_for_microtick = STARDAY_us\RA_microticks_per_revolution   =  18698.8043687066 us = 53.479355165272 Hz
+  /////  starSpeed_us_for_microtick = STARDAY_us\RA_microticks_per_revolution   =  86164090531 \ 2304000 = 37397.608737413194444444444444444 us = 26.739677582636 Hz
   //OCR1A =  [ 16,000,000Hz/ (prescaler * desired interrupt frequency) ] - 1
-  //OCR1A = 16000000/(256*53.479355165272)    -1 = 1167.675273044163
-  //f = 16000000(256*(1168+1)) = 53.464499572284 Hz by Timer1
+  //OCR1A = 16000000/(256*26.739677582636)    -1 =  2336.3505460883251218510457065429
+  //f = 16000000(256*(  2336+1)) = 26.743688489516474112109542148053  Hz by Timer1
 
   cli(); //запретить все прерывания!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
