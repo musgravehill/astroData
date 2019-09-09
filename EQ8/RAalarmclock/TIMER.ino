@@ -9,19 +9,6 @@
   Using Timer 5 disables PWM (analogWrite) on pins 44, 45 and 46
 */
 
-void TIMER_OCR1A_init() {
-  TIMER_OCR1A = EEPROM16_Read(TIMER_OCR1A_store_address);
-}
-void TIMER_OCR1A_inc() {
-  TIMER_OCR1A++;
-  EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A);
-  TIMER_config(1, true, true);
-}
-void TIMER_OCR1A_dec() {
-  TIMER_OCR1A--;
-  EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A);
-  TIMER_config(1, true, true);
-}
 
 
 
@@ -84,12 +71,11 @@ ISR (TIMER1_COMPA_vect) {
       break;
   }
 
-  if (SYS_STATE != SYS_STATE_STAR_TRACKING) {
-    //Serial.println(TIMER_tick_counter);
+  if (SYS_STATE == SYS_STATE_PULT_DEC_FORWARD || SYS_STATE == SYS_STATE_PULT_DEC_BACKWARD) {
     TIMER_tick_counter++;
-    if (TIMER_tick_counter > PULT_SPEED_COEFF) {
+    if (TIMER_tick_counter >= PULT_SPEED_COEFF) {
       TIMER_tick_counter = 0;
-      MOTOR_RA_TICK(); //star speed when puls some btn pressed      
+      MOTOR_RA_TICK(); //star speed when puls some btn pressed
     }
   }
 }

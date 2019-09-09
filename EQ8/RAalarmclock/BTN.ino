@@ -1,18 +1,25 @@
-void BUTTON_check() {
-  uint8_t state;
-  uint8_t SYS_STATE_TMP = SYS_STATE_STAR_TRACKING;
 
-  //RA_speed_inc 5 //PD5
+
+void BUTTON_BOX_check() {
+  uint8_t state;
+
+  //pult_speed_inc 5 //PD5
   state = bitRead(PIND, 5);
   if (state == 0) { //btn pressed
-    TIMER_OCR1A_inc();
+    PULT_SPEED_inc();
   }
 
-  //RA_speed_dec PD4
+  //pult_speed_dec PD4
   state = bitRead(PIND, 4);
   if (state == 0) { //btn pressed
-    TIMER_OCR1A_dec();
+    PULT_SPEED_dec();
   }
+
+}
+
+void BUTTON_PULT_check() {
+  uint8_t state;
+  uint8_t SYS_STATE_TMP = SYS_STATE_STAR_TRACKING;
 
   //BUTTON_RA_FORWARD 7 //PD7
   state = bitRead(PIND, 7);
@@ -70,6 +77,19 @@ void BUTTON_init() {
   pinMode(BUTTON_RA_BACKWARD,  INPUT_PULLUP);
   pinMode(BUTTON_DEC_FORWARD,  INPUT_PULLUP);
   pinMode(BUTTON_DEC_BACKWARD,  INPUT_PULLUP);
+}
+
+void PULT_SPEED_inc() {
+  if (PULT_SPEED_COEFF < PULT_SPEED_COEFF_MAX) {
+    PULT_SPEED_COEFF++;
+  }
+  PULT_SPEED_COEFF = constrain(PULT_SPEED_COEFF, 1, PULT_SPEED_COEFF_MAX);
+}
+void PULT_SPEED_dec() {
+  if (PULT_SPEED_COEFF > 2) {
+    PULT_SPEED_COEFF--;
+  }
+  PULT_SPEED_COEFF = constrain(PULT_SPEED_COEFF, 1, PULT_SPEED_COEFF_MAX);
 }
 
 

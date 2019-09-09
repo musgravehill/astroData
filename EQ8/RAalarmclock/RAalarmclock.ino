@@ -30,7 +30,8 @@
 #define SYS_STATE_PULT_DEC_BACKWARD 4
 volatile uint8_t SYS_STATE = SYS_STATE_STAR_TRACKING;
 volatile uint8_t SYS_STATE_PREV = SYS_STATE_STAR_TRACKING;
-#define PULT_SPEED_COEFF 500
+uint8_t PULT_SPEED_COEFF = 2;
+#define PULT_SPEED_COEFF_MAX 100
 volatile uint16_t TIMER_tick_counter = 0;
 
 //========================================SKY MATH=========================================
@@ -45,26 +46,15 @@ volatile uint16_t TIMER_tick_counter = 0;
 //#define RA_microticks_per_revolution  2304000L; //ось прямого восхождения
 
 uint16_t TIMER_OCR1A = 2336; //Верхняя граница счета. Диапазон от 0 до 65535.
-uint8_t TIMER_OCR1A_store_address = 0; //save value to eeprom
 
 uint32_t TIMEMACHINE_prevMicros_83ms = 1L;
+uint32_t TIMEMACHINE_prevMicros_313ms = 1L;
 uint32_t TIMEMACHINE_prevMicros_873ms = 1L;
 
 void setup() {
-  Serial.begin(9600);
-  EEPROM16_Write(TIMER_OCR1A_store_address, TIMER_OCR1A); //TMP
-  TIMER_OCR1A_init();
+  //Serial.begin(9600);
   BUTTON_init();
   MOTOR_init();
-
-  Serial.println(TIMER_OCR1A);    
-
-  /*delay(1000);
-  uint16_t i = 0;  //32*200
-  for (i = 0; i < 6400; i++) {
-    MOTOR_DEC_TICK();
-    delayMicroseconds(100);
-  }*/
 }
 
 void loop() {
