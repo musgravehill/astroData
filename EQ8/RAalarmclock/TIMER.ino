@@ -33,6 +33,9 @@ void TIMER_config(uint8_t speed_divider, bool dir_ra, bool dir_dec) {
   TCNT1  = 0;//initialize counter value to 0
 
   OCR1A =  TIMER_OCR1A / speed_divider;    //Верхняя граница счета. Диапазон от 0 до 65535.
+  if (OCR1A < 8) {
+    OCR1A = 8;
+  }
 
   TCCR1B |= (1 << WGM12);  // Режим CTC (сброс по совпадению)
 

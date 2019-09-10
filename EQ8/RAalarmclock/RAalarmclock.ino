@@ -30,8 +30,9 @@
 #define SYS_STATE_PULT_DEC_BACKWARD 4
 volatile uint8_t SYS_STATE = SYS_STATE_STAR_TRACKING;
 volatile uint8_t SYS_STATE_PREV = SYS_STATE_STAR_TRACKING;
-uint8_t PULT_SPEED_COEFF = 2;
-#define PULT_SPEED_COEFF_MAX 100
+uint16_t PULT_SPEED_COEFF = 2;
+#define PULT_SPEED_COEFF_MIN 2
+#define PULT_SPEED_COEFF_MAX 1000
 volatile uint16_t TIMER_tick_counter = 0;
 
 //========================================SKY MATH=========================================
